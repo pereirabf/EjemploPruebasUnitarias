@@ -1,13 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using CapaModelos;
+using CapaDatos.Interfaces;
 
 namespace CapaDatos
 {
     public class BDEscuela:DbContext
     {
-        public DbSet<Estudiante> Estudiantes { get; set; }
-        public DbSet<Profesor> Profesores { get; set; }
-        public DbSet<Curso> Cursos { get; set; }
+
+        public virtual DbSet<Estudiante> Estudiantes { get; set; }
+        public virtual DbSet<Profesor> Profesores { get; set; }
+        public virtual DbSet<Curso> Cursos { get; set; }
 
         public BDEscuela()
         {
