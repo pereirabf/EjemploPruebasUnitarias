@@ -1,5 +1,6 @@
 <Solution>
   <Project Path="CapaDatos/CapaDatos.csproj" />
+  <Project Path="CapaDatosTest/CapaDatosTest.csproj" Id="849dd9fe-8d41-484c-90c8-719cc0fff721" />
   <Project Path="CapaLogica/CapaLogica.csproj" />
   <Project Path="CapaLogicaTest/CapaLogicaTest.csproj" Id="c105df5a-475e-4b1e-a8f9-a2392e378c7b" />
   <Project Path="CapaModelos/CapaModelos.csproj" />

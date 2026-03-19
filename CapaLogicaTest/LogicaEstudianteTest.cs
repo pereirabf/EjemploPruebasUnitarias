@@ -79,6 +79,10 @@ namespace CapaLogicaTest
 
             var SustitutoEstudiantesBD = new Mock<CapaDatos.Interfaces.IEstudianteBD>();
             SustitutoEstudiantesBD.Setup(x => x.ObtenerMenoresEdad()).Returns(ListaEstudiantesMenores);
+            SustitutoEstudiantesBD.Setup(x => x.ObtenerEstudiantes()).Returns(ListaEstudiantesMenores);
+            SustitutoEstudiantesBD.Setup(x => x.AgregarEstudiante(It.IsAny<Estudiante>())).Returns(true);
+            SustitutoEstudiantesBD.Setup(x => x.ActualizarEstudiante(It.IsAny<Estudiante>())).Returns(true);
+            SustitutoEstudiantesBD.Setup(x => x.EliminarEstudiante(It.IsAny<int>())).Returns(true);
 
             var InstanciaLogicaEstudiantes = new LogicaEstudiante(SustitutoEstudiantesBD.Object);
 
@@ -87,6 +91,10 @@ namespace CapaLogicaTest
 
             Assert.Equal(resultado, resultadoEsperado);
             SustitutoEstudiantesBD.Verify(x => x.ObtenerMenoresEdad(), Times.Once);
+            SustitutoEstudiantesBD.Verify(x => x.ObtenerEstudiantes(), Times.Never);
+            SustitutoEstudiantesBD.Verify(x => x.AgregarEstudiante(It.IsAny<Estudiante>()), Times.Never);
+            SustitutoEstudiantesBD.Verify(x => x.ActualizarEstudiante(It.IsAny<Estudiante>()), Times.Never);
+            SustitutoEstudiantesBD.Verify(x => x.EliminarEstudiante(It.IsAny<int>()), Times.Never);
         }
     }
 }
