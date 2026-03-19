@@ -39,5 +39,54 @@ namespace CapaLogicaTest
 
             SustitutoEstudiantesBD.Verify(x => x.AgregarEstudiante(It.IsAny<Estudiante>()), Times.Once);
         }
+
+        [Fact]
+        public void Revisar_ObtenerMenoresDeEdadConDatos()
+        {
+            List<Estudiante> ListaEstudiantesMenores = new List<Estudiante>();
+            ListaEstudiantesMenores.Add(new Estudiante
+            {
+                Nombre = "Juan",
+                Edad = 16
+            });
+            ListaEstudiantesMenores.Add(new Estudiante
+            {
+                Nombre = "Pedro",
+                Edad = 15
+            });
+            ListaEstudiantesMenores.Add(new Estudiante
+            {
+                Nombre = "Maria",
+                Edad = 16
+            });
+
+            var SustitutoEstudiantesBD = new Mock<CapaDatos.Interfaces.IEstudianteBD>();
+            SustitutoEstudiantesBD.Setup(x => x.ObtenerMenoresEdad()).Returns(ListaEstudiantesMenores);
+
+            var InstanciaLogicaEstudiantes = new LogicaEstudiante(SustitutoEstudiantesBD.Object);
+
+            var resultado = InstanciaLogicaEstudiantes.ObtenerMenoresDeEdad();
+            var resultadoEsperado = "Juan\r\nPedro\r\nMaria\r\n";
+
+            Assert.Equal(resultado, resultadoEsperado);
+            SustitutoEstudiantesBD.Verify(x => x.ObtenerMenoresEdad(), Times.Once);
+        }
+
+        [Fact]
+        public void Revisar_ObtenerMenoresDeEdadSinDatos()
+        {
+            List<Estudiante> ListaEstudiantesMenores = new List<Estudiante>();
+
+            var SustitutoEstudiantesBD = new Mock<CapaDatos.Interfaces.IEstudianteBD>();
+            SustitutoEstudiantesBD.Setup(x => x.ObtenerMenoresEdad()).Returns(ListaEstudiantesMenores);
+
+            var InstanciaLogicaEstudiantes = new LogicaEstudiante(SustitutoEstudiantesBD.Object);
+
+            var resultado = InstanciaLogicaEstudiantes.ObtenerMenoresDeEdad();
+            var resultadoEsperado = "";
+
+            Assert.Equal(resultado, resultadoEsperado);
+            SustitutoEstudiantesBD.Verify(x => x.ObtenerMenoresEdad(), Times.Once);
+        }
     }
 }
