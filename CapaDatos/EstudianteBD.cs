@@ -17,6 +17,11 @@ namespace CapaDatos
             EscuelaNueva.Database.Migrate();
         }
 
+        public EstudianteBD(BDEscuela instanciaBD)
+        {
+            EscuelaNueva = instanciaBD;
+        }
+
         public bool AgregarEstudiante(Estudiante estudiante)
         {
             EscuelaNueva.Estudiantes.Add(estudiante);
