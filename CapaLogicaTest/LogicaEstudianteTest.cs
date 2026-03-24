@@ -13,13 +13,17 @@ namespace CapaLogicaTest
         [Fact]
         public void Revisar_Agregar_Estudiante_Exitoso()
         {
+        //datos a utilizar
             var SustitutoEstudiantesBD = new Mock<CapaDatos.Interfaces.IEstudianteBD>();
             SustitutoEstudiantesBD.Setup(x => x.AgregarEstudiante(It.IsAny<Estudiante>())).Returns(true);
 
             var InstanciaLogicaEstudiantes = new LogicaEstudiante(SustitutoEstudiantesBD.Object);
-            
-            var resultado = InstanciaLogicaEstudiantes.AgregarEstudiante(new Estudiante());
 
+        //Ejecuci[on de la prueba
+            
+            var resultado = InstanciaLogicaEstudiantes.AgregarEstudiante(new Estudiante(){ Nombre="Pedro"});
+
+        //Verificaci[on del resultado
             Assert.True(resultado);
 
             SustitutoEstudiantesBD.Verify(x => x.AgregarEstudiante(It.IsAny<Estudiante>()),Times.Once);  
@@ -30,14 +34,14 @@ namespace CapaLogicaTest
         {
             var SustitutoEstudiantesBD = new Mock<CapaDatos.Interfaces.IEstudianteBD>();
             SustitutoEstudiantesBD.Setup(x => x.AgregarEstudiante(It.IsAny<Estudiante>())).Returns(false);
+            SustitutoEstudiantesBD.Setup(x => x.AgregarEstudiante(It.IsAny<Estudiante>())).Throws(new Exception("No se puede agregar un estudiante sin nombre"));
 
             var InstanciaLogicaEstudiantes = new LogicaEstudiante(SustitutoEstudiantesBD.Object);
+            Estudiante e = new Estudiante();
 
-            var resultado = InstanciaLogicaEstudiantes.AgregarEstudiante(new Estudiante());
+            Assert.Throws<System.Exception>(()=>InstanciaLogicaEstudiantes.AgregarEstudiante(e));
 
-            Assert.False(resultado);
-
-            SustitutoEstudiantesBD.Verify(x => x.AgregarEstudiante(It.IsAny<Estudiante>()), Times.Once);
+            SustitutoEstudiantesBD.Verify(x => x.AgregarEstudiante(It.IsAny<Estudiante>()), Times.AtMost(1));
         }
 
         [Fact]

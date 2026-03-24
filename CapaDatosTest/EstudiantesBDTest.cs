@@ -10,8 +10,9 @@ namespace CapaDatosTest
         [Fact]
         public void AgregarEstudianteExitoso()
         {
+        //Generaci[on de datos
             var options = new DbContextOptionsBuilder<BDEscuela>()
-                            .UseInMemoryDatabase(databaseName:"TestDatabase")
+                            .UseInMemoryDatabase(databaseName: "TestDatabase")
                             .Options;
 
             using var context = new BDEscuela(options);
@@ -28,7 +29,7 @@ namespace CapaDatosTest
 
             Assert.True(resultado);
             Assert.Single(context.Estudiantes);
-            Assert.Equal("Maria",context.Estudiantes.First().Nombre);
+            Assert.Equal("Maria", context.Estudiantes.First().Nombre);
         }
 
         [Fact]
@@ -59,6 +60,52 @@ namespace CapaDatosTest
             Assert.True(resultado);
             SustitutoBaseDeDatos.Verify(m => m.Add(It.IsAny<Estudiante>()), Times.Once);       // Verifica que Add se llamó
             SustitutoContexto.Verify(m => m.SaveChanges(), Times.Once);                  // Verifica que SaveChanges se llamó
+        }
+
+        [Fact]
+        public void prueba_eliminar_exitoso()
+        {
+            //Generar datos
+            var options = new DbContextOptionsBuilder<BDEscuela>()
+                            .UseInMemoryDatabase(databaseName: "TestDatabase")
+                            .Options;
+
+            var context = new BDEscuela(options);
+
+            var InstanciaEstudiantesBD = new EstudianteBD(context);
+
+            //InstanciaEstudiantesBD.AgregarEstudiante(new Estudiante() { Nombre = "Pedro" });
+            context.Estudiantes.Add(new Estudiante() { Nombre = "Pedro" });
+            context.SaveChanges();
+
+            //Ejecuci[on
+            var resultado = InstanciaEstudiantesBD.EliminarEstudiante(1);
+
+            //Verificaci[on del resultado
+            Assert.True(resultado);
+
+        }
+
+        [Fact]
+        public void prueba_eliminar_fallido()
+        {
+            //Generar datos
+            var options = new DbContextOptionsBuilder<BDEscuela>()
+                            .UseInMemoryDatabase(databaseName: "TestDatabase")
+                            .Options;
+
+            var context = new BDEscuela(options);
+
+            var InstanciaEstudiantesBD = new EstudianteBD(context);
+
+            //InstanciaEstudiantesBD.AgregarEstudiante(new Estudiante() { Nombre = "Pedro" });
+
+            //Ejecuci[on
+            var resultado = InstanciaEstudiantesBD.EliminarEstudiante(2);
+
+            //Verificaci[on del resultado
+            Assert.False(resultado);
+
         }
     }
 }

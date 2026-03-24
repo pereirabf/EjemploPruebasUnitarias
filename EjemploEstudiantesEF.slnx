@@ -5,4 +5,6 @@
   <Project Path="CapaLogicaTest/CapaLogicaTest.csproj" Id="c105df5a-475e-4b1e-a8f9-a2392e378c7b" />
   <Project Path="CapaModelos/CapaModelos.csproj" />
   <Project Path="CapaPresentacion/CapaPresentacion.csproj" />
+  <Project Path="ProyectoChat/ProyectoChat.csproj" Id="c047987c-ab2a-4318-8648-2d3b7d33f540" />
+  <Project Path="PruebaChat/PruebaChat.csproj" Id="1288feaf-8e70-411f-ad45-5431332b4d63" />
 </Solution>

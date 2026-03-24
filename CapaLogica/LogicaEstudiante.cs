@@ -1,5 +1,6 @@
 ﻿using CapaDatos;
 using CapaModelos;
+using Microsoft.IdentityModel.Tokens;
 
 namespace CapaLogica
 {
@@ -19,7 +20,10 @@ namespace CapaLogica
 
         public bool AgregarEstudiante(Estudiante estudiante)
         {
-            return InstanciaEstudianteBD.AgregarEstudiante(estudiante);
+            if (estudiante.Nombre.IsNullOrEmpty())
+                throw new Exception("No se puede agregar un estudiante sin nombre");
+            else
+                return InstanciaEstudianteBD.AgregarEstudiante(estudiante);
         }
 
         public List<Estudiante> ObtenerEstudiantes()
